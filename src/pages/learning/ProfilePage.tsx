@@ -1,9 +1,11 @@
 import React from 'react';
-import { FiUser, FiSettings, FiAward, FiTrendingUp, FiClock, FiEdit } from 'react-icons/fi';
+import { useNavigate } from 'react-router-dom';
+import { FiUser, FiSettings, FiAward, FiTrendingUp, FiClock, FiEdit, FiLock, FiHelpCircle, FiInfo } from 'react-icons/fi';
 import { useSelector } from 'react-redux';
 import { selectUser } from '@store/slices/authSlice';
 
 const ProfilePage: React.FC = () => {
+  const navigate = useNavigate();
   const user = useSelector(selectUser);
 
   const stats = [
@@ -51,7 +53,10 @@ const ProfilePage: React.FC = () => {
               </div>
             </div>
           </div>
-          <button className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center gap-2">
+          <button
+            onClick={() => navigate('/profile/edit')}
+            className="px-4 py-2 bg-white text-blue-600 rounded-lg font-medium hover:bg-blue-50 transition-colors flex items-center gap-2"
+          >
             <FiEdit />
             Edit Profile
           </button>
@@ -106,21 +111,40 @@ const ProfilePage: React.FC = () => {
         <div className="bg-white rounded-lg border border-gray-200 p-6">
           <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Actions</h2>
           <div className="space-y-2">
-            <button className="w-full px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 transition-colors text-left flex items-center gap-3">
+            <button
+              onClick={() => navigate('/profile/edit')}
+              className="w-full px-4 py-3 bg-blue-50 text-blue-600 rounded-lg font-medium hover:bg-blue-100 transition-colors text-left flex items-center gap-3"
+            >
               <FiEdit />
               Edit Profile
             </button>
-            <button className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3">
-              <FiSettings />
-              Settings
+            <button
+              onClick={() => navigate('/profile/change-password')}
+              className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3"
+            >
+              <FiLock />
+              Change Password
             </button>
-            <button className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3">
+            <button
+              onClick={() => navigate('/profile/progress')}
+              className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3"
+            >
               <FiTrendingUp />
               View Progress
             </button>
-            <button className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3">
-              <FiAward />
-              Achievements
+            <button
+              onClick={() => navigate('/profile/help')}
+              className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3"
+            >
+              <FiHelpCircle />
+              Help Center
+            </button>
+            <button
+              onClick={() => navigate('/profile/about')}
+              className="w-full px-4 py-3 bg-gray-50 text-gray-700 rounded-lg font-medium hover:bg-gray-100 transition-colors text-left flex items-center gap-3"
+            >
+              <FiInfo />
+              About VedAI
             </button>
           </div>
         </div>

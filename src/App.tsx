@@ -24,6 +24,11 @@ const PracticeTestPage = React.lazy(() => import('@pages/practice/PracticeTestPa
 const ResultsPage = React.lazy(() => import('@pages/practice/ResultsPage'));
 const ChatPage = React.lazy(() => import('@pages/learning/ChatPage'));
 const ProfilePage = React.lazy(() => import('@pages/learning/ProfilePage'));
+const EditProfilePage = React.lazy(() => import('@pages/profile/EditProfilePage'));
+const ChangePasswordPage = React.lazy(() => import('@pages/profile/ChangePasswordPage'));
+const ProgressPage = React.lazy(() => import('@pages/profile/ProgressPage'));
+const HelpPage = React.lazy(() => import('@pages/profile/HelpPage'));
+const AboutPage = React.lazy(() => import('@pages/profile/AboutPage'));
 const NotFoundPage = React.lazy(() => import('@pages/NotFoundPage'));
 
 // Loading component
@@ -214,6 +219,71 @@ const App: React.FC<AppProps> = () => {
                 element={
                   <React.Suspense fallback={<LoadingFallback />}>
                     <ProfilePage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/profile/edit"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <EditProfilePage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/profile/change-password"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <ChangePasswordPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/profile/progress"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <ProgressPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/profile/help"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <HelpPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/profile/about"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <AboutPage />
                   </React.Suspense>
                 }
               />
