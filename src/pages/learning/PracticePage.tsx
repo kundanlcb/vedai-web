@@ -1,7 +1,9 @@
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiTarget, FiTrendingUp, FiClock, FiAward } from 'react-icons/fi';
 
 const PracticePage: React.FC = () => {
+  const navigate = useNavigate();
   const practiceCategories = [
     {
       id: '1',
@@ -124,7 +126,10 @@ const PracticePage: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <button className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors">
+              <button 
+                onClick={() => navigate(`/practice/test/${category.id}`)}
+                className="w-full px-4 py-2 bg-gray-900 text-white rounded-lg font-medium hover:bg-gray-800 transition-colors"
+              >
                 Start Practice
               </button>
             </div>

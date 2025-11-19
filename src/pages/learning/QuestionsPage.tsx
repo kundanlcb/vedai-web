@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { FiHelpCircle, FiSearch, FiFilter, FiBookOpen } from 'react-icons/fi';
 import { useAppDispatch, useAppSelector } from '../../hooks/useAppDispatch';
 import {
@@ -9,6 +10,7 @@ import {
 
 const QuestionsPage: React.FC = () => {
   const dispatch = useAppDispatch();
+  const navigate = useNavigate();
   const questionBanks = useAppSelector(selectQuestionBanks);
   const loading = useAppSelector(selectQuestionsLoading);
   const [searchQuery, setSearchQuery] = useState('');
@@ -117,7 +119,10 @@ const QuestionsPage: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <button className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors">
+              <button 
+                onClick={() => navigate(`/questions/${bank.id}`)}
+                className="w-full px-4 py-2 bg-green-600 text-white rounded-lg font-medium hover:bg-green-700 transition-colors"
+              >
                 Start Practice
               </button>
             </div>
