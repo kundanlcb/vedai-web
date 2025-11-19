@@ -20,6 +20,26 @@ const EditProfilePage: React.FC = () => {
 
   const [isSaving, setIsSaving] = useState(false);
   const [message, setMessage] = useState<{ type: 'success' | 'error'; text: string } | null>(null);
+  const [profilePicture, setProfilePicture] = useState<string | null>(null);
+
+  const handleProfilePictureUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Check file size (2MB max)
+      if (file.size > 2 * 1024 * 1024) {
+        setMessage({ type: 'error', text: 'File size must be less than 2MB' });
+        return;
+      }
+      
+      // Create preview URL
+      const photoUrl = URL.createObjectURL(file);
+      setProfilePicture(photoUrl);
+      setMessage({ type: 'success', text: `Profile picture uploaded: ${file.name}` });
+      
+      // Clear message after 3 seconds
+      setTimeout(() => setMessage(null), 3000);
+    }
+  };
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement | HTMLSelectElement>) => {
     setFormData({
@@ -77,14 +97,28 @@ const EditProfilePage: React.FC = () => {
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Profile Picture</h2>
         <div className="flex items-center gap-6">
-          <div className="w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center text-4xl font-bold text-white">
-            {formData.name.charAt(0).toUpperCase()}
-          </div>
+          {profilePicture ? (
+            <img 
+              src={profilePicture} 
+              alt="Profile" 
+              className="w-24 h-24 rounded-full object-cover"
+            />
+          ) : (
+            <div className="w-24 h-24 rounded-full bg-blue-600 flex items-center justify-center text-4xl font-bold text-white">
+              {formData.name.charAt(0).toUpperCase()}
+            </div>
+          )}
           <div>
-            <button className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2">
+            <label className="px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors flex items-center gap-2 cursor-pointer">
               <FiUpload />
               Upload New Picture
-            </button>
+              <input 
+                type="file" 
+                accept="image/*" 
+                onChange={handleProfilePictureUpload}
+                className="hidden"
+              />
+            </label>
             <p className="text-sm text-gray-500 mt-2">JPG, PNG or GIF. Max size 2MB</p>
           </div>
         </div>

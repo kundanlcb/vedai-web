@@ -72,22 +72,22 @@ const HelpPage: React.FC = () => {
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Quick Links</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          <a
-            href="#"
-            className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200"
+          <button
+            onClick={() => alert('User Guide: This will open a comprehensive guide on how to use VedAI.')}
+            className="p-4 bg-blue-50 rounded-lg hover:bg-blue-100 transition-colors border border-blue-200 text-left"
           >
             <FiBook className="text-blue-600 w-6 h-6 mb-2" />
             <h3 className="font-semibold text-gray-900 mb-1">User Guide</h3>
             <p className="text-sm text-gray-600">Learn how to use VedAI effectively</p>
-          </a>
-          <a
-            href="#"
-            className="p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors border border-green-200"
+          </button>
+          <button
+            onClick={() => alert('Video Tutorials: This will open a library of video tutorials.')}
+            className="p-4 bg-green-50 rounded-lg hover:bg-green-100 transition-colors border border-green-200 text-left"
           >
             <FiMessageCircle className="text-green-600 w-6 h-6 mb-2" />
             <h3 className="font-semibold text-gray-900 mb-1">Video Tutorials</h3>
             <p className="text-sm text-gray-600">Watch step-by-step video guides</p>
-          </a>
+          </button>
         </div>
       </div>
 
