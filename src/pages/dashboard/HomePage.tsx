@@ -80,7 +80,7 @@ const HomePage: React.FC = () => {
       <section>
         <div className="flex items-center justify-between mb-4">
           <h2 className="text-2xl font-bold text-gray-900">My Subjects</h2>
-          <a href="/learning" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
+          <a href="/learning/subjects" className="text-blue-600 hover:text-blue-700 text-sm font-medium">
             View All →
           </a>
         </div>
