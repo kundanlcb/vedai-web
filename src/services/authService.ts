@@ -12,8 +12,6 @@ import type {
   ChangePasswordResponse,
   User,
   AuthTokens,
-  RefreshTokenRequest,
-  RefreshTokenResponse,
 } from '../types/auth';
 
 // Constants
@@ -25,8 +23,7 @@ const TOKEN_REFRESH_THRESHOLD = 60 * 1000; // Refresh token 1 minute before expi
 export class AuthError extends Error {
   constructor(
     public code: string,
-    message: string,
-    public statusCode?: number
+    message: string
   ) {
     super(message);
     this.name = 'AuthError';
@@ -35,7 +32,7 @@ export class AuthError extends Error {
 
 class AuthService {
   private refreshTokenPromise: Promise<AuthTokens> | null = null;
-  private tokenRefreshTimeout: NodeJS.Timeout | null = null;
+  private tokenRefreshTimeout: ReturnType<typeof setTimeout> | null = null;
 
   /**
    * Login with email and password
@@ -126,7 +123,7 @@ class AuthService {
   /**
    * Request password reset
    */
-  async forgotPassword(payload: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
+  async forgotPassword(_payload: ForgotPasswordRequest): Promise<ForgotPasswordResponse> {
     try {
       // Production: Use real API
       // const response = await apiClient.post<ForgotPasswordResponse>('/auth/forgot-password', payload);
@@ -144,7 +141,7 @@ class AuthService {
   /**
    * Reset password with token
    */
-  async resetPassword(payload: ResetPasswordRequest): Promise<ResetPasswordResponse> {
+  async resetPassword(_payload: ResetPasswordRequest): Promise<ResetPasswordResponse> {
     try {
       // Production: Use real API
       // const response = await apiClient.post<ResetPasswordResponse>('/auth/reset-password', payload);
@@ -162,7 +159,8 @@ class AuthService {
   /**
    * Change password (authenticated user)
    */
-  async changePassword(payload: ChangePasswordRequest): Promise<ChangePasswordResponse> {
+  // eslint-disable-next-line
+  async changePassword(_payload: ChangePasswordRequest): Promise<ChangePasswordResponse> {
     try {
       // Production: Use real API
       // const response = await apiClient.post<ChangePasswordResponse>('/auth/change-password', payload);
@@ -188,7 +186,8 @@ class AuthService {
 
     try {
       const tokens = this.getStoredTokens();
-      if (!tokens?.refreshToken) {
+      if (!tokens || !tokens.refreshToken) {
+        this.logout();
         throw new AuthError('NO_REFRESH_TOKEN', 'No refresh token available');
       }
 
@@ -243,6 +242,7 @@ class AuthService {
   /**
    * Verify session is still valid
    */
+  // eslint-disable-next-line
   async verifySession(): Promise<boolean> {
     try {
       const tokens = this.getStoredTokens();
