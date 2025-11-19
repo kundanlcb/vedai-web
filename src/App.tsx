@@ -18,7 +18,10 @@ const SubjectsPage = React.lazy(() => import('@pages/learning/SubjectsPage'));
 const SubjectDetailPage = React.lazy(() => import('@pages/learning/SubjectDetailPage'));
 const ChapterDetailPage = React.lazy(() => import('@pages/learning/ChapterDetailPage'));
 const QuestionsPage = React.lazy(() => import('@pages/learning/QuestionsPage'));
+const QuestionDetailPage = React.lazy(() => import('@pages/learning/QuestionDetailPage'));
 const PracticePage = React.lazy(() => import('@pages/learning/PracticePage'));
+const PracticeTestPage = React.lazy(() => import('@pages/practice/PracticeTestPage'));
+const ResultsPage = React.lazy(() => import('@pages/practice/ResultsPage'));
 const ChatPage = React.lazy(() => import('@pages/learning/ChatPage'));
 const ProfilePage = React.lazy(() => import('@pages/learning/ProfilePage'));
 const NotFoundPage = React.lazy(() => import('@pages/NotFoundPage'));
@@ -136,6 +139,19 @@ const App: React.FC<AppProps> = () => {
             }
           />
 
+          <Route
+            path="/questions/:questionId"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <QuestionDetailPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
           {/* Practice Routes */}
           <Route
             path="/practice"
@@ -144,6 +160,32 @@ const App: React.FC<AppProps> = () => {
                 element={
                   <React.Suspense fallback={<LoadingFallback />}>
                     <PracticePage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/practice/test/:testId"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <PracticeTestPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/practice/results/:testId"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <ResultsPage />
                   </React.Suspense>
                 }
               />
