@@ -1,5 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
 import { selectUser } from '@store/slices/authSlice';
 import DailyGoalCard from '@components/cards/DailyGoalCard';
 import SubjectCard from '@components/cards/SubjectCard';
@@ -7,6 +8,7 @@ import QuestionBankCard from '@components/cards/QuestionBankCard';
 
 const HomePage: React.FC = () => {
   const user = useSelector(selectUser);
+  const navigate = useNavigate();
 
   // Mock data - will be replaced with API calls
   const subjects = [
@@ -111,12 +113,16 @@ const HomePage: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Your Statistics</h2>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
           {[
-            { label: 'Total Questions Solved', value: '430', icon: '✓' },
-            { label: 'Average Accuracy', value: '78%', icon: '🎯' },
-            { label: 'Study Streak', value: '7 days', icon: '🔥' },
-            { label: 'Learning Hours', value: '24.5h', icon: '⏱️' },
+            { label: 'Total Questions Solved', value: '430', icon: '✓', link: '/profile/progress' },
+            { label: 'Average Accuracy', value: '78%', icon: '🎯', link: '/profile/progress' },
+            { label: 'Study Streak', value: '7 days', icon: '🔥', link: '/profile/progress' },
+            { label: 'Learning Hours', value: '24.5h', icon: '⏱️', link: '/profile/progress' },
           ].map((stat, idx) => (
-            <div key={idx} className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow">
+            <div 
+              key={idx} 
+              onClick={() => navigate(stat.link)}
+              className="bg-white rounded-lg border border-gray-200 p-6 hover:shadow-md transition-shadow cursor-pointer"
+            >
               <div className="text-3xl mb-2">{stat.icon}</div>
               <p className="text-sm text-gray-600 mb-1">{stat.label}</p>
               <p className="text-2xl font-bold text-gray-900">{stat.value}</p>

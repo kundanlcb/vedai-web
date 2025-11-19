@@ -4,6 +4,13 @@ import { FiTarget, FiTrendingUp, FiClock, FiAward } from 'react-icons/fi';
 
 const PracticePage: React.FC = () => {
   const navigate = useNavigate();
+  
+  const handleRecentAttemptClick = (attemptName: string) => {
+    // Navigate to results page for this attempt
+    alert(`Viewing results for: ${attemptName}. This will show detailed results and analysis.`);
+    // In production: navigate(`/practice/results/${attemptId}`);
+  };
+  
   const practiceCategories = [
     {
       id: '1',
@@ -142,7 +149,11 @@ const PracticePage: React.FC = () => {
         <h2 className="text-2xl font-bold text-gray-900 mb-4">Recent Attempts</h2>
         <div className="bg-white rounded-lg border border-gray-200 divide-y divide-gray-200">
           {recentAttempts.map((attempt, index) => (
-            <div key={index} className="p-4 hover:bg-gray-50 transition-colors cursor-pointer">
+            <div 
+              key={index} 
+              onClick={() => handleRecentAttemptClick(attempt.name)}
+              className="p-4 hover:bg-gray-50 transition-colors cursor-pointer"
+            >
               <div className="flex items-center justify-between">
                 <div className="flex-1">
                   <h3 className="font-semibold text-gray-900">{attempt.name}</h3>
