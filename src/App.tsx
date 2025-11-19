@@ -14,6 +14,9 @@ const ResetPasswordPage = React.lazy(() => import('@pages/auth/ResetPasswordPage
 
 const HomePage = React.lazy(() => import('@pages/dashboard/HomePage'));
 const LearningPage = React.lazy(() => import('@pages/learning/LearningPage'));
+const SubjectsPage = React.lazy(() => import('@pages/learning/SubjectsPage'));
+const SubjectDetailPage = React.lazy(() => import('@pages/learning/SubjectDetailPage'));
+const ChapterDetailPage = React.lazy(() => import('@pages/learning/ChapterDetailPage'));
 const QuestionsPage = React.lazy(() => import('@pages/learning/QuestionsPage'));
 const PracticePage = React.lazy(() => import('@pages/learning/PracticePage'));
 const ChatPage = React.lazy(() => import('@pages/learning/ChatPage'));
@@ -72,6 +75,47 @@ const App: React.FC<AppProps> = () => {
                 element={
                   <React.Suspense fallback={<LoadingFallback />}>
                     <LearningPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          {/* Subjects Routes */}
+          <Route
+            path="/learning/subjects"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <SubjectsPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          <Route
+            path="/learning/subjects/:subjectId"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <SubjectDetailPage />
+                  </React.Suspense>
+                }
+              />
+            }
+          />
+
+          {/* Chapters Routes */}
+          <Route
+            path="/learning/chapters/:chapterId"
+            element={
+              <ProtectedRoute
+                element={
+                  <React.Suspense fallback={<LoadingFallback />}>
+                    <ChapterDetailPage />
                   </React.Suspense>
                 }
               />
