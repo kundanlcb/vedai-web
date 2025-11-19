@@ -87,6 +87,42 @@ const ChapterDetailPage: React.FC = () => {
     }
   };
 
+  const handleContinueLearning = () => {
+    // Find first incomplete lesson or first lesson
+    const firstIncompleteLesson = mockLessons.find(
+      (lesson) => lesson.status !== 'completed'
+    );
+    const lessonToStart = firstIncompleteLesson || mockLessons[0];
+    if (lessonToStart) {
+      // Navigate to lesson detail page (placeholder for now)
+      alert(`Starting lesson: ${lessonToStart.name}. Lesson detail page will be implemented.`);
+    }
+  };
+
+  const handleViewQuestions = () => {
+    // Navigate to questions filtered by this chapter
+    if (chapter) {
+      navigate('/questions', { state: { chapterId: chapter.id } });
+    }
+  };
+
+  const handleLessonClick = (lesson: typeof mockLessons[0]) => {
+    // Navigate to lesson detail page (placeholder for now)
+    alert(`Opening lesson: ${lesson.name}. Lesson detail page will be implemented.`);
+  };
+
+  const handleDownloadNotes = () => {
+    // Download chapter notes
+    alert('Downloading chapter notes... This will connect to the API to download the PDF.');
+  };
+
+  const handleViewPracticeSet = () => {
+    // View practice question set
+    if (chapter) {
+      navigate('/questions', { state: { chapterId: chapter.id, practiceSet: true } });
+    }
+  };
+
   if (loading) {
     return (
       <div className="flex items-center justify-center min-h-screen">
@@ -164,10 +200,16 @@ const ChapterDetailPage: React.FC = () => {
 
         {/* Action Buttons */}
         <div className="flex gap-3">
-          <button className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+          <button 
+            onClick={handleContinueLearning}
+            className="flex-1 px-6 py-3 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+          >
             Continue Learning
           </button>
-          <button className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors">
+          <button 
+            onClick={handleViewQuestions}
+            className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
+          >
             View Questions
           </button>
         </div>
@@ -181,6 +223,7 @@ const ChapterDetailPage: React.FC = () => {
           {mockLessons.map((lesson, index) => (
             <div
               key={lesson.id}
+              onClick={() => handleLessonClick(lesson)}
               className="bg-white rounded-lg border border-gray-200 p-4 hover:shadow-md hover:border-blue-400 transition-all cursor-pointer"
             >
               <div className="flex items-center gap-4">
@@ -219,7 +262,13 @@ const ChapterDetailPage: React.FC = () => {
 
                 {/* Play Button */}
                 <div className="flex-shrink-0">
-                  <button className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition-colors">
+                  <button 
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      handleLessonClick(lesson);
+                    }}
+                    className="p-2 bg-blue-100 text-blue-600 rounded-full hover:bg-blue-200 transition-colors"
+                  >
                     <FiPlayCircle className="w-6 h-6" />
                   </button>
                 </div>
@@ -233,28 +282,28 @@ const ChapterDetailPage: React.FC = () => {
       <div className="bg-white rounded-lg border border-gray-200 p-6">
         <h2 className="text-xl font-bold text-gray-900 mb-4">Additional Resources</h2>
         <div className="space-y-3">
-          <a
-            href="#"
-            className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          <button
+            onClick={handleDownloadNotes}
+            className="w-full flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <FiBook className="text-blue-600 w-5 h-5" />
-            <div className="flex-1">
+            <div className="flex-1 text-left">
               <p className="font-medium text-gray-900">Chapter Notes PDF</p>
               <p className="text-sm text-gray-500">Comprehensive notes for this chapter</p>
             </div>
             <span className="text-sm text-blue-600 font-medium">Download</span>
-          </a>
-          <a
-            href="#"
-            className="flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
+          </button>
+          <button
+            onClick={handleViewPracticeSet}
+            className="w-full flex items-center gap-3 p-3 bg-gray-50 rounded-lg hover:bg-gray-100 transition-colors"
           >
             <FiBook className="text-purple-600 w-5 h-5" />
-            <div className="flex-1">
+            <div className="flex-1 text-left">
               <p className="font-medium text-gray-900">Practice Question Set</p>
               <p className="text-sm text-gray-500">50 practice questions with solutions</p>
             </div>
             <span className="text-sm text-blue-600 font-medium">View</span>
-          </a>
+          </button>
         </div>
       </div>
     </div>

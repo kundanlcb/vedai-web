@@ -27,6 +27,8 @@ const QuestionDetailPage: React.FC = () => {
   const [subjectiveAnswer, setSubjectiveAnswer] = useState('');
   const [isSubmitted, setIsSubmitted] = useState(false);
   const [isBookmarked, setIsBookmarked] = useState(false);
+  const [uploadedPhoto, setUploadedPhoto] = useState<string | null>(null);
+  const [notesLink, setNotesLink] = useState('');
 
   // Mock question data (to be replaced with API call)
   const question: Question = {
@@ -56,6 +58,18 @@ const QuestionDetailPage: React.FC = () => {
     setSelectedAnswer('');
     setSubjectiveAnswer('');
     setIsSubmitted(false);
+    setUploadedPhoto(null);
+    setNotesLink('');
+  };
+
+  const handlePhotoUpload = (event: React.ChangeEvent<HTMLInputElement>) => {
+    const file = event.target.files?.[0];
+    if (file) {
+      // Create a URL for preview
+      const photoUrl = URL.createObjectURL(file);
+      setUploadedPhoto(photoUrl);
+      alert(`Photo uploaded: ${file.name}. This will be sent to the server for processing.`);
+    }
   };
 
   const isCorrect = () => {
@@ -195,16 +209,38 @@ const QuestionDetailPage: React.FC = () => {
             )}
             {answerFormat === 'photo' && (
               <div className="border-2 border-dashed border-gray-300 rounded-lg p-8 text-center">
-                <FiCamera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-                <p className="text-gray-600 mb-4">Upload a photo of your handwritten answer</p>
-                <button className="px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700">
-                  Choose Photo
-                </button>
+                {uploadedPhoto ? (
+                  <div>
+                    <img src={uploadedPhoto} alt="Uploaded answer" className="max-w-full max-h-96 mx-auto mb-4 rounded-lg" />
+                    <button 
+                      onClick={() => setUploadedPhoto(null)}
+                      className="px-6 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700"
+                    >
+                      Remove Photo
+                    </button>
+                  </div>
+                ) : (
+                  <>
+                    <FiCamera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
+                    <p className="text-gray-600 mb-4">Upload a photo of your handwritten answer</p>
+                    <label className="inline-block px-6 py-2 bg-blue-600 text-white rounded-lg hover:bg-blue-700 cursor-pointer">
+                      Choose Photo
+                      <input 
+                        type="file" 
+                        accept="image/*" 
+                        onChange={handlePhotoUpload}
+                        className="hidden"
+                      />
+                    </label>
+                  </>
+                )}
               </div>
             )}
             {answerFormat === 'notes' && (
               <input
                 type="url"
+                value={notesLink}
+                onChange={(e) => setNotesLink(e.target.value)}
                 placeholder="Paste link to your notes (Google Docs, OneNote, etc.)"
                 className="w-full p-4 border-2 border-gray-300 rounded-lg focus:border-blue-500 focus:ring-2 focus:ring-blue-200"
                 disabled={isSubmitted}

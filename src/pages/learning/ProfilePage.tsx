@@ -22,6 +22,19 @@ const ProfilePage: React.FC = () => {
     { action: 'Completed Biology Quiz', time: '2 days ago', score: 78 },
   ];
 
+  const handleActivityClick = (action: string) => {
+    // Navigate based on activity type
+    if (action.includes('test') || action.includes('Test') || action.includes('Quiz')) {
+      navigate('/practice');
+    } else if (action.includes('chapter') || action.includes('Chapter')) {
+      navigate('/learning/subjects');
+    } else if (action.includes('Questions')) {
+      navigate('/questions');
+    } else {
+      navigate('/profile/progress');
+    }
+  };
+
   const achievements = [
     { title: '7 Day Streak', description: 'Studied for 7 consecutive days', icon: '🔥' },
     { title: 'Quick Learner', description: 'Completed 10 chapters', icon: '⚡' },
@@ -74,7 +87,11 @@ const ProfilePage: React.FC = () => {
             red: 'bg-red-50 text-red-600',
           };
           return (
-            <div key={index} className="bg-white rounded-lg border border-gray-200 p-6">
+            <div 
+              key={index} 
+              onClick={() => navigate('/profile/progress')}
+              className="bg-white rounded-lg border border-gray-200 p-6 cursor-pointer hover:shadow-md transition-shadow"
+            >
               <div className={`w-10 h-10 rounded-lg ${colorClasses[stat.color]} flex items-center justify-center mb-3`}>
                 <Icon className="w-5 h-5" />
               </div>
@@ -92,7 +109,11 @@ const ProfilePage: React.FC = () => {
           <h2 className="text-xl font-bold text-gray-900 mb-4">Recent Activity</h2>
           <div className="space-y-3">
             {recentActivity.map((activity, index) => (
-              <div key={index} className="flex items-center justify-between p-4 bg-gray-50 rounded-lg">
+              <div 
+                key={index} 
+                onClick={() => handleActivityClick(activity.action)}
+                className="flex items-center justify-between p-4 bg-gray-50 rounded-lg cursor-pointer hover:bg-gray-100 transition-colors"
+              >
                 <div className="flex-1">
                   <p className="font-medium text-gray-900">{activity.action}</p>
                   <p className="text-sm text-gray-500">{activity.time}</p>

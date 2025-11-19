@@ -154,7 +154,9 @@ const AboutPage: React.FC = () => {
             Email Us
           </a>
           <a
-            href="#"
+            href="https://vedai.com"
+            target="_blank"
+            rel="noopener noreferrer"
             className="px-6 py-3 border border-gray-300 text-gray-700 rounded-lg font-medium hover:bg-gray-50 transition-colors"
           >
             Visit Website

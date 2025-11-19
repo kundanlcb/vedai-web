@@ -28,6 +28,11 @@ const SubjectsPage: React.FC = () => {
     navigate(`/learning/subjects/${subjectId}`);
   };
 
+  const handleFilterClick = () => {
+    // Show filter modal/panel - placeholder for now
+    alert('Filter functionality will open a modal to filter by status, difficulty, and other criteria.');
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'completed':
@@ -91,7 +96,10 @@ const SubjectsPage: React.FC = () => {
           </div>
 
           {/* Filter Button */}
-          <button className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors">
+          <button 
+            onClick={handleFilterClick}
+            className="flex items-center gap-2 px-4 py-2 bg-gray-100 text-gray-700 rounded-lg hover:bg-gray-200 transition-colors"
+          >
             <FiFilter />
             <span>Filters</span>
           </button>
@@ -167,7 +175,13 @@ const SubjectsPage: React.FC = () => {
               </div>
 
               {/* Action Button */}
-              <button className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors">
+              <button 
+                onClick={(e) => {
+                  e.stopPropagation();
+                  handleSubjectClick(subject.id);
+                }}
+                className="w-full mt-4 px-4 py-2 bg-blue-600 text-white rounded-lg font-medium hover:bg-blue-700 transition-colors"
+              >
                 Continue Learning
               </button>
             </div>
