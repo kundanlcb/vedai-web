@@ -1,10 +1,15 @@
 import { configureStore } from '@reduxjs/toolkit';
 import authReducer from './slices/authSlice';
+import subjectsReducer from './slices/subjectsSlice';
+import chaptersReducer from './slices/chaptersSlice';
+import questionsReducer from './slices/questionsSlice';
 
 export const store = configureStore({
   reducer: {
     auth: authReducer,
-    // Other slices will be added here as features are built
+    subjects: subjectsReducer,
+    chapters: chaptersReducer,
+    questions: questionsReducer,
   },
 });
 
